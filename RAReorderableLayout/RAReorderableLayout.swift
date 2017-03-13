@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol RAReorderableLayoutDelegate: UICollectionViewDelegateFlowLayout {
+@objc public protocol RAReorderableLayoutDelegate: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, at: IndexPath, willMoveTo toIndexPath: IndexPath)
     func collectionView(_ collectionView: UICollectionView, at: IndexPath, didMoveTo toIndexPath: IndexPath)
     func collectionView(_ collectionView: UICollectionView, allowMoveAt indexPath: IndexPath) -> Bool
@@ -20,7 +20,7 @@ public protocol RAReorderableLayoutDelegate: UICollectionViewDelegateFlowLayout 
     func collectionView(_ collectionView: UICollectionView, collectionView layout: RAReorderableLayout, didEndDraggingItemTo indexPath: IndexPath)
 }
 
-public protocol RAReorderableLayoutDataSource: UICollectionViewDataSource {
+@objc public protocol RAReorderableLayoutDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     
