@@ -14,10 +14,10 @@ import UIKit
     func collectionView(_ collectionView: UICollectionView, allowMoveAt indexPath: IndexPath) -> Bool
     func collectionView(_ collectionView: UICollectionView, at: IndexPath, canMoveTo: IndexPath) -> Bool
     
-    func collectionView(_ collectionView: UICollectionView, collectionView layout: RAReorderableLayout, willBeginDraggingItemAt indexPath: IndexPath)
-    func collectionView(_ collectionView: UICollectionView, collectionView layout: RAReorderableLayout, didBeginDraggingItemAt indexPath: IndexPath)
-    func collectionView(_ collectionView: UICollectionView, collectionView layout: RAReorderableLayout, willEndDraggingItemTo indexPath: IndexPath)
-    func collectionView(_ collectionView: UICollectionView, collectionView layout: RAReorderableLayout, didEndDraggingItemTo indexPath: IndexPath)
+    @objc optional func collectionView(_ collectionView: UICollectionView, collectionView layout: RAReorderableLayout, willBeginDraggingItemAt indexPath: IndexPath)
+    @objc optional func collectionView(_ collectionView: UICollectionView, collectionView layout: RAReorderableLayout, didBeginDraggingItemAt indexPath: IndexPath)
+    @objc optional func collectionView(_ collectionView: UICollectionView, collectionView layout: RAReorderableLayout, willEndDraggingItemTo indexPath: IndexPath)
+    @objc optional func collectionView(_ collectionView: UICollectionView, collectionView layout: RAReorderableLayout, didEndDraggingItemTo indexPath: IndexPath)
 }
 
 @objc public protocol RAReorderableLayoutDataSource: UICollectionViewDataSource {
@@ -378,7 +378,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
         guard cellFakeView != nil else { return }
         
         // will end drag item
-        self.delegate?.collectionView(self.collectionView!, collectionView: self, willEndDraggingItemTo: toIndexPath)
+        self.delegate?.collectionView?(self.collectionView!, collectionView: self, willEndDraggingItemTo: toIndexPath)
         
         collectionView?.scrollsToTop = true
         
@@ -392,7 +392,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
             self.invalidateLayout()
             
             // did end drag item
-            self.delegate?.collectionView(self.collectionView!, collectionView: self, didEndDraggingItemTo: toIndexPath)
+            self.delegate?.collectionView?(self.collectionView!, collectionView: self, didEndDraggingItemTo: toIndexPath)
         }
     }
     
@@ -410,7 +410,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
         switch longPress.state {
         case .began:
             // will begin drag item
-            delegate?.collectionView(self.collectionView!, collectionView: self, willBeginDraggingItemAt: indexPath!)
+            delegate?.collectionView?(self.collectionView!, collectionView: self, willBeginDraggingItemAt: indexPath!)
             collectionView?.scrollsToTop = false
             
             let currentCell = collectionView?.cellForItem(at: indexPath!)
@@ -428,7 +428,7 @@ open class RAReorderableLayout: UICollectionViewFlowLayout, UIGestureRecognizerD
             cellFakeView?.pushFowardView()
             
             // did begin drag item
-            delegate?.collectionView(self.collectionView!, collectionView: self, didBeginDraggingItemAt: indexPath!)
+            delegate?.collectionView?(self.collectionView!, collectionView: self, didBeginDraggingItemAt: indexPath!)
             
         case .cancelled, .ended:
             cancelDrag(indexPath)
